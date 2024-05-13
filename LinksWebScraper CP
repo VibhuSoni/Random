@@ -1,0 +1,21 @@
+pip install requests
+pip install beautifulsoup4
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the website you want to scrape
+url = 'https://www.google.com/search?q=soup&sca_esv=b99a51cc48654f1f&sxsrf=ADLYWIIvKRj0nT6ii8yTr_DMZOKi-O2AvQ%3A1715641373004&source=hp&ei=HJxCZq6UOtnJwN4Pr6S3sAw&iflsig=AL9hbdgAAAAAZkKqLY-d-nL38UC-Pj70fF5EFg6DHeDO&ved=0ahUKEwiukuOU3ouGAxXZJNAFHS_SDcYQ4dUDCBc&uact=5&oq=soup&gs_lp=Egdnd3Mtd2l6IgRzb3VwMgsQABiABBixAxjJAzIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQLhiABBjHARivATIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBiSAxiKBTILEAAYgAQYkgMYigUyBRAAGIAEMgsQLhiABBjHARivAUjTBlAAWL4EcAB4AJABAJgBY6AB7QKqAQE0uAEDyAEA-AEBmAIEoAKCA8ICChAjGIAEGCcYigXCAgQQIxgnwgIREAAYgAQYkQIYsQMYgwEYigXCAhEQLhiABBixAxjRAxiDARjHAcICCxAAGIAEGLEDGIMBwgILEC4YgAQYkQIYigXCAgsQABiABBiRAhiKBcICDhAAGIAEGJECGLEDGIoFwgIXEC4YgAQYkQIYsQMY0QMYgwEYxwEYigXCAgQQABgDwgIOEC4YgAQYsQMYgwEYigXCAggQLhiABBixA8ICCxAuGIAEGLEDGIMBmAMAkgcDMi4yoAfYNA&sclient=gws-wiz'
+
+# Send a GET request to the URL
+response = requests.get(url)
+
+# Parse the HTML content of the website
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Find specific elements on the page and extract information
+# For example, let's say we want to extract all the links on the page
+links = soup.find_all('a')
+
+# Print out the links
+for link in links:
+    print(link.get('href'))
