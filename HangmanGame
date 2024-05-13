@@ -1,0 +1,58 @@
+import random
+
+class HangmanGame:
+
+    def __init__(self, words):
+        self.words = words
+        self.secret_word = random.choice(words)
+        self.remaining_guesses = 6
+        self.guessed_letters = set()
+        self.current_progress = [
+            '_' if letter.isalpha() else letter for letter in self.secret_word
+        ]
+
+    def play(self):
+        print("Welcome to Hangman!")
+        print("Try to guess the secret word.")
+        print("You have 6 attempts.")
+
+        while self.remaining_guesses > 0:
+            print("\n" + " ".join(self.current_progress))
+            guess = self.get_guess()
+            if guess in self.guessed_letters:
+                print("You've already guessed that letter. Try again.")
+                continue
+            self.guessed_letters.add(guess)
+            if guess not in self.secret_word:
+                self.remaining_guesses -= 1
+                print(
+                    f"Wrong guess! You have {self.remaining_guesses} guesses left."
+                )
+            else:
+                print("Good guess!")
+                self.update_progress(guess)
+            if '_' not in self.current_progress:
+                print("\nCongratulations! You've guessed the word:",
+                      self.secret_word)
+                return
+        print("\nSorry, you've run out of guesses. The word was:",
+              self.secret_word)
+
+    def get_guess(self):
+        while True:
+            guess = input("Guess a letter: ").lower()
+            if len(guess) == 1 and guess.isalpha():
+                return guess
+            else:
+                print("Please enter a single letter.")
+
+    def update_progress(self, guess):
+        for i, letter in enumerate(self.secret_word):
+            if letter == guess:
+                self.current_progress[i] = guess
+
+
+if __name__ == "__main__":
+    words = ["python", "hangman", "computer", "programming", "gaming", "code"]
+    game = HangmanGame(words)
+    game.play()
